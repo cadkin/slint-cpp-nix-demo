@@ -41,41 +41,41 @@
         };
       };
 
-      audit = rec {
-        package = pkgs.ld-audit-search-mod;
-        config  = import ./nix/nixpkgs/audit.nix {};
-
-        env = {
-          LD_AUDIT = "${package}/lib/libld-audit-search-mod.so";
-          LD_AUDIT_SEARCH_MOD_CONFIG = builtins.toString config;
-        };
-      };
     };
   in with config; rec {
     inherit config;
 
     lib = rec {
-      # NOP
+      mkPackages = { pkgs, stdenv ? pkgs.stdenv }: rec {
+        nixpkgs = pkgs;
+
+        audit = rec {
+          package = pkgs.ld-audit-search-mod;
+          config  = import ./nix/nixpkgs/audit.nix {};
+
+          env = {
+            LD_AUDIT = "${package}/lib/libld-audit-search-mod.so";
+            LD_AUDIT_SEARCH_MOD_CONFIG = builtins.toString config;
+          };
+        };
+
+        slint-cpp-demo = pkgs.callPackage ./nix/demo {
+          src     = self;
+          version = "0.0.1";
+
+          inherit audit;
+        };
+      };
     } // config.pkgs.lib;
+
+    legacyPackages = rec {
+      inherit ( lib.mkPackages { inherit pkgs stdenv; } ) nixpkgs slint-cpp-demo;
+    };
 
     packages = rec {
       default = slint-cpp-demo;
 
-      slint-cpp-demo = stdenv.mkDerivation {
-        pname   = "slint-cpp-demo";
-        version = "0.0.1";
-
-        src = self;
-
-        nativeBuildInputs = [
-          pkgs.cmake
-        ];
-
-        buildInputs = [
-          pkgs.slint.api.cpp
-          pkgs.libglvnd
-        ];
-      };
+      inherit (legacyPackages) slint-cpp-demo;
     };
 
     devShells = rec {
