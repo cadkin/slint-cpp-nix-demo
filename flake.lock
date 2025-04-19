@@ -67,15 +67,16 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1745092287,
-        "narHash": "sha256-QQz7nYAdg7pQBoWHOwk7R7xKWAGxFXdgiswjDtGCPxE=",
+        "lastModified": 1745093728,
+        "narHash": "sha256-myLf9GXJhdi18vBtb8kPBf6I+Mm4Ukan+K+wgqzdFx8=",
         "owner": "cadkin",
         "repo": "slint",
-        "rev": "0da1d741863fba07391393277fc8fb25141a4337",
+        "rev": "f5d8e2f2206238a7fd2cd8d7e0e36457df1a1583",
         "type": "github"
       },
       "original": {
         "owner": "cadkin",
+        "ref": "flake",
         "repo": "slint",
         "type": "github"
       }

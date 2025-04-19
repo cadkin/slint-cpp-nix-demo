@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs;
-    slint.url   = github:cadkin/slint;
+    slint.url   = github:cadkin/slint/flake;
     utils.url   = github:numtide/flake-utils;
     lasm = {
       url = github:DDoSolitary/ld-audit-search-mod;
