@@ -5,6 +5,13 @@
     nixpkgs.url = github:NixOS/nixpkgs;
     slint.url   = github:cadkin/slint;
     utils.url   = github:numtide/flake-utils;
+    lasm = {
+      url = github:DDoSolitary/ld-audit-search-mod;
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
+    };
   };
 
   outputs = inputs @ { self, utils, ... }: utils.lib.eachDefaultSystem (system: let
@@ -12,14 +19,17 @@
       pkgs = import inputs.nixpkgs {
         inherit system;
         inherit (import ./nix/nixpkgs/config.nix {
-          slintOverlay = inputs.slint.overlays.${system}.default;
+          inputOverlays = with inputs; [
+            lasm.overlays.default
+            slint.overlays.${system}.default
+          ];
         }) config overlays;
       };
 
       stdenv = llvm.stdenv;
 
       llvm = rec {
-        packages = pkgs.llvmPackages_18;
+        packages = pkgs.llvmPackages_19;
         stdenv   = packages.stdenv;
 
         tooling = rec {
@@ -28,6 +38,16 @@
           clang-tools-libcxx = clang-tools.override {
             enableLibcxx = true;
           };
+        };
+      };
+
+      audit = rec {
+        package = pkgs.ld-audit-search-mod;
+        config  = import ./nix/nixpkgs/audit.nix {};
+
+        env = {
+          LD_AUDIT = "${package}/lib/libld-audit-search-mod.so";
+          LD_AUDIT_SEARCH_MOD_CONFIG = builtins.toString config;
         };
       };
     };
@@ -75,6 +95,8 @@
           llvm.tooling.lldb
           llvm.tooling.clang-tools
         ];
+
+        env = audit.env;
       };
     };
   });

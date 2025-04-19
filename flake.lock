@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "lasm": {
+      "inputs": {
+        "flake-utils": [
+          "utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1739277656,
+        "narHash": "sha256-4CzF3SdUpJpNBEYc3klSM02B9cEsESdW0U6r/WrMvjg=",
+        "owner": "DDoSolitary",
+        "repo": "ld-audit-search-mod",
+        "rev": "2ebc6f5c213d17acf620cbee6159c0db1e409560",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DDoSolitary",
+        "repo": "ld-audit-search-mod",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1743980621,
@@ -32,6 +55,7 @@
     },
     "root": {
       "inputs": {
+        "lasm": "lasm",
         "nixpkgs": "nixpkgs",
         "slint": "slint",
         "utils": "utils_2"
@@ -43,11 +67,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1743981019,
-        "narHash": "sha256-jZfhYf7lFTN9oNhMWBdoWX9i5LbkhNKzuM68eyp+vTU=",
+        "lastModified": 1745090304,
+        "narHash": "sha256-0OiSPb+TbaMlkCISx/hVTKeC/8rUl+TTZBFG5w2Hhso=",
         "owner": "cadkin",
         "repo": "slint",
-        "rev": "66651e3021c72e00f86dead469f5092b9ee8ae2d",
+        "rev": "b46bf7e78b42b445a56d1db0e16561e3d0938acc",
         "type": "github"
       },
       "original": {

@@ -1,4 +1,4 @@
-{ slintOverlay, ... }:
+{ inputOverlays, ... }:
 
 {
   overlays = [
@@ -7,9 +7,7 @@
         # NOP
       }
     )
-
-    slintOverlay
-  ];
+  ] ++ inputOverlays;
 
   config = {
     allowUnfree = true;
